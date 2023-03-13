@@ -44,7 +44,7 @@
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png">
 <meta property="article:published_time" content="2023-03-09T13:52:00.000Z">
-<meta property="article:modified_time" content="2023-03-12T15:58:35.746Z">
+<meta property="article:modified_time" content="2023-03-13T15:12:44.097Z">
 <meta property="article:author" content="MQ Chen">
 <meta property="article:tag" content="SVG">
 <meta property="article:tag" content="XML">
@@ -1745,7 +1745,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     debug: "env",
     cdn: {"js":{"app":"/js/app.js","parallax":"/js/plugins/parallax.js","rightMenu":"/js/plugins/rightMenu.js","rightMenus":"/js/plugins/rightMenus.js","sites":"/js/plugins/tags/sites.js","friends":"/js/plugins/tags/friends.js","contributors":"/js/plugins/tags/contributors.js","search":"/js/search/hexo.js"},"css":{"style":"/css/style.css"}},
     default: {"avatar":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/avatar/round/3442075.svg","link":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/link/8f277b4ee0ecd.svg","cover":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/cover/76b86c0226ffd.svg","image":"https://unpkg.com/volantis-static@0.0.1654736714924/media/placeholder/image/2659360.svg"},
-    lastupdate: new Date(1678636749058),
+    lastupdate: new Date(1678720400947),
     sidebar: {
       for_page: ["blogger","category","tagcloud","webinfo"],
       for_post: ["toc"],
@@ -2549,15 +2549,56 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 <circle cx="20" cy="20" r="8" fill="transparent" stroke="#fff" stroke-width="3">
 </svg></li>
 </ul>
-<h4 id="SVG图片"><a href="#SVG图片" class="headerlink" title="SVG图片"></a>SVG图片</h4><ul>
-<li><code>&lt;image&gt;&lt;/image&gt;</code><br>待完善</li>
-</ul>
-<h4 id="SVG文本进阶"><a href="#SVG文本进阶" class="headerlink" title="SVG文本进阶"></a>SVG文本进阶</h4><ul>
-<li><code>&lt;text&gt;&lt;/text&gt;</code><br>待完善</li>
+<h4 id="SVG文本分行"><a href="#SVG文本分行" class="headerlink" title="SVG文本分行"></a>SVG文本分行</h4><ul>
+<li><code>&lt;tspan&gt;&lt;/tspan&gt;</code><br>可以调整文本和字体的属性以及当前文本的位置、绝对或相对坐标值。<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">svg</span> <span class="attr">width</span>=<span class="string">&quot;50&quot;</span> <span class="attr">height</span>=<span class="string">&quot;50&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">text</span> <span class="attr">x</span>=<span class="string">&quot;20&quot;</span> <span class="attr">y</span>=<span class="string">&quot;20&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">tspan</span> <span class="attr">x</span>=<span class="string">&quot;10&quot;</span>&gt;</span>第一行内容<span class="tag">&lt;/<span class="name">tspan</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">tspan</span> <span class="attr">x</span>=<span class="string">&quot;10&quot;</span> <span class="attr">dy</span>=<span class="string">&quot;20&quot;</span>&gt;</span>第二行内容<span class="tag">&lt;/<span class="name">tspan</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">text</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">svg</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<svg width="100" height="50">
+<text x="20" y="20">
+  <tspan x="10">第一行内容</tspan>
+  <tspan x="10" dy="20">第二行内容</tspan>
+</text>
+</svg></li>
 </ul>
 <h4 id="SVG路径进阶"><a href="#SVG路径进阶" class="headerlink" title="SVG路径进阶"></a>SVG路径进阶</h4><ul>
-<li><code>&lt;path&gt;&lt;/path&gt;</code><br>待完善</li>
+<li><code>&lt;path&gt;&lt;/path&gt;</code><br>基本属性及使用方法已在第一篇大致梳理，现针对 d 属性进行详细介绍</li>
 </ul>
+<ol start="0">
+<li>注意：后续命令字母区分大小写，区别在于：大写后涉及的均为绝对位置，即坐标；小写后涉及的均为相对位置，即相对于上一个点的移动距离</li>
+<li>M：move to 表示移动到该位置坐标，每一个M都表示新路径的开始</li>
+<li>L：line to 表示使用直线连接到L之后的坐标，例如：<code>M0 10 L40 10</code></li>
+<li>H&#x2F;V：horizontal lineto&#x2F;vertical lineto 从当前点绘制一条水平&#x2F;垂直线，等价于y&#x2F;x值为零的L命令</li>
+<li>Z：closepath 通过将当前子路径通过绘制一条自动的直线连接回其实点，结束当前子路径，其长度可以为零</li>
+<li>C：curve to 从当前位置到位置(x, y)，绘制一条Bezier曲线。<br>  三次贝塞尔曲线需要定义一个点和两个控制点，因此需要设置三组坐标参数，例如：<code>C x1 y1 x2 y2 x y</code>，(x1, y1) 是曲线起始位置的控制点，(x2, y2)是曲线终止位置的控制点，(x, y)是曲线的终点。<br>  简写的贝塞尔曲线命令S：在当前位置和终点间绘制一条三次贝塞尔曲线，例如：<code>S x2 y2 x y</code>，终点控制点通过(x2, y2)指定，起始控制点是上一条曲线命令的终点控制点在当前位置上的反射点；若不存在上一条曲线，则其与曲线的起始点相同。</li>
+<li>Q：quadratic Bezier curveto 从当前点到位置(x, y)，绘制一条二次Bezier曲线。例如：<code>Q x1 y1 x y</code>。仅需要一个控制点，用于控制起点和终点的曲线斜率。<br>  简写的贝塞尔曲线命令T：T命令前必须是一个Q或者T命令，才能达到效果。特征类似S命令。</li>
+</ol>
+<p>举例如下</p>
+<ul>
+<li><img no-lazy class="inline" src="https://fastly.jsdelivr.net/gh/hfg-gmuend/openmoji/color/svg/1F383.svg" style="height:1.5em"/>直线L/V/H
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">svg</span> <span class="attr">width</span>=<span class="string">&quot;100&quot;</span> <span class="attr">height</span>=<span class="string">&quot;100&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">path</span> <span class="attr">d</span>=<span class="string">&quot;M10 10 L90 90 V 10 H 50&quot;</span> <span class="attr">stroke</span>=<span class="string">&quot;red&quot;</span> <span class="attr">stroke-width</span>=<span class="string">&quot;1&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">path</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">svg</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<svg width="100" height="100">
+  <path d="M10 10 L90 90 V 10 H 50" stroke="red" stroke-width="1" fill="none">
+  </path>
+</svg>
+
+<ul>
+<li><img no-lazy class="inline" src="https://fastly.jsdelivr.net/gh/hfg-gmuend/openmoji/color/svg/1F383.svg" style="height:1.5em"/>三次贝塞尔曲线C/S
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">svg</span> <span class="attr">width</span>=<span class="string">&quot;100&quot;</span> <span class="attr">height</span>=<span class="string">&quot;100&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">path</span> <span class="attr">d</span>=<span class="string">&quot;M110 90 C20 0 15 -80 40 -80 S20 80 40 80&quot;</span> <span class="attr">stroke</span>=<span class="string">&quot;red&quot;</span> <span class="attr">stroke-width</span>=<span class="string">&quot;1&quot;</span> <span class="attr">fill</span>=<span class="string">&quot;none&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">path</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">svg</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<svg width="100" height="100">
+  <path d="M10 90 C30 90 25 10 50 10 S70 90 90 90" stroke="red" stroke-width="1" fill="none">
+  </path>
+</svg>
+
+<ul>
+<li><img no-lazy class="inline" src="https://fastly.jsdelivr.net/gh/hfg-gmuend/openmoji/color/svg/1F383.svg" style="height:1.5em"/>二次贝塞尔曲线Q/T
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">svg</span> <span class="attr">width</span>=<span class="string">&quot;200&quot;</span> <span class="attr">height</span>=<span class="string">&quot;100&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">path</span> <span class="attr">d</span>=<span class="string">&quot;M10 50 Q25 25 40 50 t30 0 30 0 30 0 30 0 30 0&quot;</span> <span class="attr">stroke</span>=<span class="string">&quot;red&quot;</span> <span class="attr">stroke-width</span>=<span class="string">&quot;1&quot;</span> <span class="attr">fill</span>=<span class="string">&quot;none&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">path</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">svg</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<svg width="200" height="100">
+  <path d="M10 50 Q25 25 40 50 t30 0 30 0 30 0 30 0 30 0" stroke="red" stroke-width="1" fill="none">
+  </path>
+</svg>
+
+
 <h4 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h4><p>【<a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/SVG">MDN</a>】</p>
 
   </div>
@@ -2583,10 +2624,10 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
     <div class='new-meta-box'>
       
         
-          <div class="new-meta-item date" itemprop="dateModified" datetime="2023-03-12T23:58:35+08:00">
+          <div class="new-meta-item date" itemprop="dateModified" datetime="2023-03-13T23:12:44+08:00">
   <a class='notlink'>
     <i class="fa-solid fa-edit fa-fw" aria-hidden="true"></i>
-    <p>更新于：Mar 12, 2023</p>
+    <p>更新于：Mar 13, 2023</p>
   </a>
 </div>
 
@@ -2727,7 +2768,7 @@ if (/*@cc_on!@*/false || (!!window.MSInputMethodContext && !!document.documentMo
 
 
     <div class='content'>
-        <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%83%8C%E6%99%AF"><span class="toc-text">背景</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#SVG%E5%8A%A8%E7%94%BB"><span class="toc-text">SVG动画</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#SVG%E5%9B%BE%E7%89%87"><span class="toc-text">SVG图片</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#SVG%E6%96%87%E6%9C%AC%E8%BF%9B%E9%98%B6"><span class="toc-text">SVG文本进阶</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#SVG%E8%B7%AF%E5%BE%84%E8%BF%9B%E9%98%B6"><span class="toc-text">SVG路径进阶</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="toc-text">参考资料</span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%83%8C%E6%99%AF"><span class="toc-text">背景</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#SVG%E5%8A%A8%E7%94%BB"><span class="toc-text">SVG动画</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#SVG%E6%96%87%E6%9C%AC%E5%88%86%E8%A1%8C"><span class="toc-text">SVG文本分行</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#SVG%E8%B7%AF%E5%BE%84%E8%BF%9B%E9%98%B6"><span class="toc-text">SVG路径进阶</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="toc-text">参考资料</span></a></li></ol>
     </div>
   </section>
 
@@ -3316,7 +3357,7 @@ volantis.pjax.push(()=>{_hmt.push(['_trackPageview', document.location.pathname]
 </script>
 
 
-  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"MengQi's blog","url":"http://example.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"MQ Chen","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"http://example.com/","sameAs":["https://github.com/volantis-x"],"description":"Blog of MQ Chen"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"http://example.com/","name":"MengQi's blog"}},{"@type":"ListItem","position":2,"item":{"@id":"http://example.com/categories/技术/","name":"技术"}},{"@type":"ListItem","position":2,"item":{"@id":"http://example.com/categories/技术/前端/","name":"前端"}},{"@type":"ListItem","position":2,"item":{"@id":"http://example.com/categories/技术/前端/SVG/","name":"SVG"}},{"@type":"ListItem","position":3,"item":{"@id":"http://example.com/2023/03/09/20230309_SVG进阶/","name":"SVG进阶"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"MengQi's blog","url":"http://example.com/","keywords":null,"description":"Blog of MQ Chen","author":{"@type":"Person","name":"MQ Chen","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"http://example.com/","description":"Blog of MQ Chen"},"publisher":{"@type":"Organization","name":"MengQi's blog","url":"http://example.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"http://example.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"SVG进阶","description":"日常遇到诸多使用方法上的问题，故再对svg的另一些常用语法及注意事项进行梳理总结。","inLanguage":"en","mainEntityOfPage":{"@type":"WebPage","@id":"http://example.com/2023/03/09/20230309_SVG%E8%BF%9B%E9%98%B6/"},"author":{"@type":"Person","name":"MQ Chen","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"http://example.com/"},"publisher":{"@type":"Organization","name":"MengQi's blog","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"http://example.com/2023/03/09/20230309_SVG%E8%BF%9B%E9%98%B6/","wordCount":41,"datePublished":"2023-03-09T13:52:00.000Z","dateModified":"2023-03-12T15:58:35.746Z","articleSection":"技术","keywords":"SVG,XML","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
+  <script type="application/ld+json">[{"@context":"http://schema.org","@type":"Organization","name":"MengQi's blog","url":"http://example.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},{"@context":"http://schema.org","@type":"Person","name":"MQ Chen","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"http://example.com/","sameAs":["https://github.com/volantis-x"],"description":"Blog of MQ Chen"},{"@context":"http://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"item":{"@id":"http://example.com/","name":"MengQi's blog"}},{"@type":"ListItem","position":2,"item":{"@id":"http://example.com/categories/技术/","name":"技术"}},{"@type":"ListItem","position":2,"item":{"@id":"http://example.com/categories/技术/前端/","name":"前端"}},{"@type":"ListItem","position":2,"item":{"@id":"http://example.com/categories/技术/前端/SVG/","name":"SVG"}},{"@type":"ListItem","position":3,"item":{"@id":"http://example.com/2023/03/09/20230309_SVG进阶/","name":"SVG进阶"}}]},{"@context":"http://schema.org","@type":"WebSite","name":"MengQi's blog","url":"http://example.com/","keywords":null,"description":"Blog of MQ Chen","author":{"@type":"Person","name":"MQ Chen","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"http://example.com/","description":"Blog of MQ Chen"},"publisher":{"@type":"Organization","name":"MengQi's blog","url":"http://example.com/","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"potentialAction":{"@type":"SearchAction","name":"Site Search","target":{"@type":"EntryPoint","urlTemplate":"http://example.com?s={search_term_string}"},"query-input":"required name=search_term_string"}},{"@context":"http://schema.org","@type":"BlogPosting","headline":"SVG进阶","description":"日常遇到诸多使用方法上的问题，故再对svg的另一些常用语法及注意事项进行梳理总结。","inLanguage":"en","mainEntityOfPage":{"@type":"WebPage","@id":"http://example.com/2023/03/09/20230309_SVG%E8%BF%9B%E9%98%B6/"},"author":{"@type":"Person","name":"MQ Chen","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png"},"url":"http://example.com/"},"publisher":{"@type":"Organization","name":"MengQi's blog","logo":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}},"url":"http://example.com/2023/03/09/20230309_SVG%E8%BF%9B%E9%98%B6/","wordCount":41,"datePublished":"2023-03-09T13:52:00.000Z","dateModified":"2023-03-13T15:12:44.097Z","articleSection":"技术","keywords":"SVG,XML","image":{"@type":"ImageObject","url":"https://unpkg.com/volantis-static@0.0.1654736714924/media/org.volantis/blog/favicon/android-chrome-192x192.png","width":192,"height":192}}]</script>
 
 
 
